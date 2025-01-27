@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Funnel_Display} from "next/font/google";
+import { Funnel_Display } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./Providers";
 

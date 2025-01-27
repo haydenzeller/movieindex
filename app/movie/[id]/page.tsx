@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import React from "react";
 import Image from "next/image";
+import Script from "next/script";
 
 export default function Movie({ params }: { params: Promise<{ id: string }> }) {
     type Movie = {
@@ -13,9 +14,13 @@ export default function Movie({ params }: { params: Promise<{ id: string }> }) {
         budget: number;
         tagline: string;
         genres: { id: number; name: string }[];
+        imdb_id: string;
     };
     const { id } = React.use(params);
     const [movie, setMovie] = useState({} as Movie);
+    // const [torrents, setTorrents] = useState([] as any[]);
+    const [magnet, setMagnet] = useState("");
+    const [unavailable, setUnavailable] = useState(false);
     useEffect(() => {
         (async () => {
             try {
@@ -27,7 +32,6 @@ export default function Movie({ params }: { params: Promise<{ id: string }> }) {
                     body: JSON.stringify({ query: id }),
                 });
                 const data = await res.json();
-                console.log(data);
                 setMovie(data.body);
             } catch (error: unknown) {
                 if (error instanceof Error) {
@@ -38,7 +42,49 @@ export default function Movie({ params }: { params: Promise<{ id: string }> }) {
             }
         })();
     }, [id]);
-    // const url = "magnet:?xt=urn:btih:dd8255ecdc7ca55fb0bbf81323d87062db1f6d1c&dn=Big+Buck+Bunny&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.fastcast.nz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com&ws=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2F&xs=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2Fbig-buck-bunny.torrent"
+
+    // useEffect(() => {
+    //     const fetchTorrents = async () => {
+    //         const res = await fetch(`/api/torrent`, {
+    //             method: "POST",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //             body: JSON.stringify({ IMDB_ID: movie.imdb_id }),
+    //         });
+    //         const data = await res.json();
+    //         setTorrents(data.body.data.movie.torrents);
+    //         console.log(data); // Log the full response for debugging
+    //     };
+
+    //     fetchTorrents();
+    // }, [movie.imdb_id]);
+
+    const getTorrent = async () => {
+        try {
+            const res = await fetch(`/api/torrent`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ IMDB_ID: movie.imdb_id }),
+            });
+            // const data = await res.json();
+            // const hash = data.body.data.movie.torrents[0].hash;
+            // const title = movie.title.replace(/ /g, "+");
+            const magnet =
+                "magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel";
+            // const magnet = `magnet:?xt=urn:btih:${hash}&dn=${title}&tr=http://track.one:1234/announce&tr=udp://track.two:80`;
+            setMagnet(magnet);
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                console.error(error.message);
+            } else {
+                console.error("An unknown error occurred");
+            }
+        }
+    };
+
     if (!movie.id) {
         return <div></div>;
     }
@@ -82,6 +128,40 @@ export default function Movie({ params }: { params: Promise<{ id: string }> }) {
                     <p className="text-2xl">{movie.overview}</p>
                 </div>
             </div>
+            {magnet && (
+                <>
+                    <Script
+                        src="https://cdn.jsdelivr.net/npm/@webtor/embed-sdk-js/dist/index.min.js"
+                        strategy="afterInteractive"
+                    />
+                    <video
+                        controls
+                        src={
+                            "magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel"
+                        }
+                        poster={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+                        width="100%"
+                        data-title={movie.title}
+                        className="w-1/2 h-1/2"
+                    ></video>
+                </>
+            )}
+
+            <button onClick={getTorrent}>Get Torrent</button>
+            {/* <video
+                controls
+                src={
+                    "magnet:?xt=urn:btih:6E88B3F25BA49D483D740A652BF013C341BC5373&dn=Interstellar&tr=http://track.one:1234/announce&tr=udp://track.two:80"
+                }
+                poster={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+                width="100%"
+                data-title="Sintel"
+                className="w-1/2 h-1/2"
+            ></video>
+            <script
+                src="https://cdn.jsdelivr.net/npm/@webtor/embed-sdk-js/dist/index.min.js"
+                async
+            ></script> */}
         </div>
     );
 }
