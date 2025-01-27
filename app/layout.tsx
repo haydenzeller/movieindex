@@ -23,6 +23,10 @@ export default function RootLayout({
             <body className={funDisplay.variable}>
                 <Providers>{children}</Providers>
             </body>
+            <script
+                src="https://cdn.jsdelivr.net/npm/@webtor/embed-sdk-js/dist/index.min.js"
+                async
+            ></script>
         </html>
     );
 }

@@ -47,7 +47,7 @@ export default function Video({ movie }: { movie: Movie }) {
     return (
         <div id="video">
             <video controls src={magnet}
-            poster={`https://image.tmdb.org/t/p/original/${movie.poster_path}`} className="w-full h-auto"
+            poster={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`} className="w-full h-auto"
             ></video>
             <Script src="https://cdn.jsdelivr.net/npm/@webtor/embed-sdk-js/dist/index.min.js" />
         </div>
