@@ -22,6 +22,7 @@ export default function Home() {
                 src="//pl25700289.profitablecpmrate.com/8c8c367dc3d732df912835592add853e/invoke.js"
             ></script>
             <div id="container-8c8c367dc3d732df912835592add853e"></div>
+            <div id="container-8c8c367dc3d732df912835592add853e"></div>
         </div>
     );
 }
