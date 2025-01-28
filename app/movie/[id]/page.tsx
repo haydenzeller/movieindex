@@ -73,7 +73,7 @@ export default function Movie({ params }: { params: Promise<{ id: string }> }) {
                         priority
                     />
                     <div className="flex flex-col items-center mt-5 lg:mt-0 lg:items-start h-auto w-full">
-                        <div className="bg-black bg-opacity-60 p-5 rounded-lg">
+                        <div className="bg-black light:bg-white bg-opacity-60 p-5 rounded-lg">
                             <h1 className="text-4xl font-bold">
                                 {movie.title}
                             </h1>
