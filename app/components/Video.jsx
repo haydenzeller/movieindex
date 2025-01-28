@@ -70,6 +70,7 @@ export default function Video({ movie }) {
                     magnet: magnet,
                     poster: `https://image.tmdb.org/t/p/original/${movie.backdrop_path}`,
                     lang: "en",
+                    allow: "fullscreen; autoplay; encrypted-media",
                 });
             }
         };
@@ -84,16 +85,22 @@ export default function Video({ movie }) {
     return (
         <>
             <div className="flex  items-center justify-center mb-5 flex-wrap lg:justify-start lg:flex-row gap-10 w-full h-auto mt-5">
-                {torrents ? torrents.map((torrent) => (
-                    <Button
-                        key={torrent.hash}
-                        onPress={() => {
-                            loadMagnet(torrent.hash);
-                        }}
-                    >
-                        {torrent.quality}
-                    </Button>
-                )) : <h2 className="font-bold text-2xl">Sorry, no streams available.</h2>}
+                {torrents ? (
+                    torrents.map((torrent) => (
+                        <Button
+                            key={torrent.hash}
+                            onPress={() => {
+                                loadMagnet(torrent.hash);
+                            }}
+                        >
+                            {torrent.quality}
+                        </Button>
+                    ))
+                ) : (
+                    <h2 className="font-bold text-2xl">
+                        Sorry, no streams available.
+                    </h2>
+                )}
             </div>
 
             {/* Webtor player container */}

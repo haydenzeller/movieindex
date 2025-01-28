@@ -72,7 +72,7 @@ export default function Movie({ params }: { params: Promise<{ id: string }> }) {
                         className="rounded-lg z-10 w-auto h-auto md:mx-5"
                         priority
                     />
-                    <div className="flex flex-col items-center mt-5 md:mt-0 lg:items-start h-auto w-full">
+                    <div className="flex flex-col items-center mt-5 lg:mt-0 lg:items-start h-auto w-full">
                         <div className="bg-black bg-opacity-60 p-5 rounded-lg">
                             <h1 className="text-4xl font-bold">
                                 {movie.title}
