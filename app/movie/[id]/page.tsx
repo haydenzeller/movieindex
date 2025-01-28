@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import Video from "@/app/components/Video";
 
+
 export default function Movie({ params }: { params: Promise<{ id: string }> }) {
     type Movie = {
         id: string;
