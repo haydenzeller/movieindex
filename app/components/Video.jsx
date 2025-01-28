@@ -81,7 +81,6 @@ export default function Video({ movie }) {
         };
     }, [magnet, movie.backdrop_path]); // Trigger on magnet change
 
-    if (!movie) return <></>;
     return (
         <>
             <div className="flex flex-col items-center justify-center mb-5 lg:justify-start lg:flex-row gap-10 w-full h-auto mt-5">

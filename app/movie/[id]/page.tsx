@@ -39,6 +39,9 @@ export default function Movie({ params }: { params: Promise<{ id: string }> }) {
             }
         })();
     }, [id]);
+    if (!movie) {
+        return <div>Loading...</div>;
+    }
     return (
         <div className="relative min-w-screen min-h-screen">
             <div
@@ -59,7 +62,7 @@ export default function Movie({ params }: { params: Promise<{ id: string }> }) {
                         "linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.95))",
                 }}
             />
-            <div className="relative flex flex-col items-center w-full min-h-screen z-10">
+            <div className="relative flex flex-col items-center w-full min-h-screen md:p-5 z-10">
                 <div className="flex lg:flex-row flex-col items-center lg:items-start w-full p-3">
                     <Image
                         src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
@@ -70,12 +73,17 @@ export default function Movie({ params }: { params: Promise<{ id: string }> }) {
                         priority
                     />
                     <div className="flex flex-col items-center lg:items-start h-auto w-full">
-                        <h1 className="text-4xl font-bold">{movie.title}</h1>
-                        <p className="text-3xl font-bold italic">
-                            {movie.tagline}
-                        </p>
-                        <br />
-                        <p className="text-2xl">{movie.overview}</p>
+                        <div className="bg-black bg-opacity-60 p-5 rounded-lg">
+                            <h1 className="text-4xl font-bold">
+                                {movie.title}
+                            </h1>
+                            <p className="text-3xl font-bold italic">
+                                {movie.tagline}
+                            </p>
+
+                            <br />
+                            <p className="text-2xl">{movie.overview}</p>
+                        </div>
                         <div className="w-full lg:w-1/2 md:w-3/4">
                             <Video movie={movie} />
                         </div>
