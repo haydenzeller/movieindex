@@ -4,7 +4,6 @@ import React from "react";
 import Image from "next/image";
 import Video from "@/app/components/Video";
 
-
 export default function Movie({ params }: { params: Promise<{ id: string }> }) {
     type Movie = {
         id: string;
@@ -90,6 +89,12 @@ export default function Movie({ params }: { params: Promise<{ id: string }> }) {
                         </div>
                     </div>
                 </div>
+                <script
+                    async
+                    data-cfasync="false"
+                    src="//pl25700289.profitablecpmrate.com/8c8c367dc3d732df912835592add853e/invoke.js"
+                ></script>
+                <div id="container-8c8c367dc3d732df912835592add853e"></div>
             </div>
         </div>
     );
